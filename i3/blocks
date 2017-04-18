@@ -1,0 +1,153 @@
+# i3blocks config file
+#
+# Please see man i3blocks for a complete reference!
+# The man page is also hosted at http://vivien.github.io/i3blocks
+#
+# List of valid properties:
+#
+# align
+# color
+# command
+# full_text
+# instance
+# interval
+# label
+# min_width
+# name
+# separator
+# separator_block_width
+# short_text
+# signal
+# urgent
+
+# Global properties
+#
+# The top properties below are applied to every block, but can be overridden.
+# Each block command defaults to the script name to avoid boilerplate.
+#command=/usr/share/i3blocks/$BLOCK_NAME
+command=${HOME}/.config/i3/i3-blocks/blocks/$BLOCK_NAME
+separator_block_width=15
+markup=none
+
+[timewarrior]
+label=✎
+command=${HOME}/.config/i3/other-blocks/timewarrior
+interval=5
+color=#dddddd
+
+[volume]
+label=♪
+command=${HOME}/.config/i3/other-blocks/volume
+instance=Master
+interval=once
+min_width=♪ 100%
+signal=10
+
+[weather]
+instance=6077243
+command=${HOME}/.config/i3/other-blocks/weather
+interval=300
+color=#dddddd
+
+[bandwidth]
+instance=eno1;in
+label=
+interval=1
+min_width= 1024Mb
+
+[bandwidth]
+instance=eno1;out
+label=
+interval=1
+min_width= 1024Mb
+color=#dddddd
+
+[bandwidth]
+instance=enp7s0;in
+label=
+interval=1
+min_width= 1024Mb
+
+[bandwidth]
+instance=enp7s0;out
+label=
+interval=1
+min_width= 1024Mb
+color=#dddddd
+
+[bandwidth]
+instance=wlp2s0;in
+label=
+interval=1
+min_width= 1024Mb
+
+[bandwidth]
+instance=wlp2s0;out
+label=
+interval=1
+min_width= 1024Mb
+color=#dddddd
+
+[network]
+label=
+instance=enp7s0
+interval=10
+min_width= on
+
+[network]
+label=
+instance=wlp2s0
+interval=10
+min_width= 100%
+
+[memory]
+label=
+instance=mem;free
+interval=30
+color=#dddddd
+
+[memory]
+label=
+instance=swap;total
+interval=30
+
+[ip-address]
+label=
+interval=60
+color=#dddddd
+
+[brightness]
+label=
+command=${HOME}/.config/i3/other-blocks/brightness
+interval=5
+min_width= 100%
+signal=5
+
+[cpu]
+label=
+interval=2
+min_width= 100%
+color=#dddddd
+
+[battery]
+label=
+command=${HOME}/.config/i3/other-blocks/battery
+interval=30
+min_width= 100%
+
+[temperature]
+instance=Core
+label=
+interval=5
+color=#dddddd
+
+[keymap]
+label=
+command=${HOME}/.config/i3/other-blocks/keymap
+interval=1
+signal=1
+
+[time]
+command=date '+%Y-%m-%d %H:%M:%S'
+interval=1
+color=#dddddd
