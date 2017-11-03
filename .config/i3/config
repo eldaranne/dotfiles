@@ -13,7 +13,7 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango: monospace
+font pango:DejaVu Sans Mono 9 
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -40,7 +40,14 @@ bindsym $mod+Shift+q kill
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+d exec "rofi -combi-modi run,drun -show combi -modi combi"
+bindsym $mod+Shift+Tab exec "rofi -modi window -show window"
+#bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+
+# Xresources colors
+set_from_resource $blue_bar colors.blue_ #FF0000
+set_from_resource $focused_text #000000 #000000
+
 
 # change focus
 bindsym $mod+h focus left
@@ -79,6 +86,11 @@ bindsym $mod+f fullscreen toggle
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
+
+# sshots
+bindsym --release Print exec "scrot -m '/home/jeremie/Pictures/screenshots/%s_%H%M_%d.%m.%Y_$wx$h.png'"
+bindsym --release Shift+Print exec "scrot -s '/home/jeremie/Pictures/screenshots/%s_%H%M_%d%m%Y_$wx$h.png'"
+bindsym --release $mod+Alt+Print exec "scrot -u -d 4 '/home/jeremie/Pictures/screenshots/%s_%H%M_%d%m%Y_$wx$h.png'"
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -131,11 +143,11 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
-workspace "1:Net" output DVI-I-1
-workspace "2:Code" output DVI-D-0
-workspace "3:Spotify" output DVI-I-1
-workspace "4:Mail" output DVI-D-0
-workspace "5:Misc" output DVI-D-0
+workspace "1:Net" output DP-3
+workspace "2:Code" output DP-5
+workspace "3:Spotify" output DP-3
+workspace "4:Mail" output DP-5
+workspace "5:Misc" output DP-5
 
 #
 # Some windows are floating by default
@@ -175,32 +187,34 @@ bindsym $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-bar {
-  font pango:monospace bold 10
-  strip_workspace_numbers no
-  status_command i3blocks -c ~/.config/i3/blocks
-        position top
+#bar {
+#  font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+#  font pango:DejaVu Sans Mono 10
+#  font pango:Terminus 10
+#  strip_workspace_numbers no
+#  status_command i3blocks -c ~/.config/i3/blocks
+#        position top
 
-  colors {
-    separator #586e75
-    background #002b36
-    statusline #aea79f
-    focused_workspace #586e75 #586e75 #ffffff
-    active_workspace #073642 #073642 #ffffff
-    inactive_workspace #002b36 #002b36 #aea79f
-    urgent_workspace #0083A4 #0083A4 #ffffff
-  }
-}
+#  colors {
+#    separator #586e75
+#    background #002b36
+#    statusline #aea79f
+#    focused_workspace #586e75 #586e75 #ffffff
+#    active_workspace #073642 #073642 #ffffff
+#    inactive_workspace #002b36 #002b36 #aea79f
+#    urgent_workspace #0083A4 #0083A4 #ffffff
+# }
+#}
 
 #
 # Color scheme
 # class                 border  backgr. text    indicator child_border
-client.focused          #0083A4 #0083A4 #fdf6e3 #0083A4
+client.focused          $blue_bar $blue_bar $focused_text $blue_bar
 client.focused_inactive #073642 #073642 #93a1a1 #002b36
 client.unfocused        #002b36 #002b36 #586e75 #002b36
 client.urgent           #FF5E00 #FF5E00 #fdf6e3 #FF5E00
 
-set $wallpaper ~/.config/i3/wallpaper.jpg
+set $wallpaper wallpaper.jpg
 
 new_window normal 1
 new_float normal
@@ -210,7 +224,7 @@ mouse_warping none
 workspace_auto_back_and_forth yes
 
 # Lock, Logout, Suspend, HIbernate, Reboot and Shutdown
-set $locker i3lock --color=000000
+set $locker "~/.config/i3/i3lock-fancy/lock -pf Inconsolata -t 'None shall pass!'"
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
 mode "$mode_system" {
     bindsym l exec --no-startup-id $locker, mode "default"
@@ -224,6 +238,8 @@ mode "$mode_system" {
     bindsym Escape mode "default"
 }
 bindsym $mod+Pause mode "$mode_system"
+
+exec --no-startup-id xautolock -time 5 -locker $locker &
 
 # Volume & Media Keys
 set $pulse_audio_sink 1
@@ -275,6 +291,8 @@ exec --no-startup-id "nm-applet"
 exec --no-startup-id "dropbox start"
 # Compton
 exec --no-startup-id "compton --config ~/.config/compton.conf -b"
+# Polybar
+exec_always --no-startup-id "$HOME/.config/polybar/polybar.sh"
 # Disable Nautilus and Nemo desktop
 exec_always --no-startup-id "gsettings set org.gnome.desktop.background show-desktop-icons false"
 exec_always --no-startup-id "gsettings set org.nemo.desktop show-desktop-icons false"
@@ -286,7 +304,6 @@ exec "${HOME}/.config/i3/scripts/lightson.sh &"
 # Startup apps
 exec google-chrome
 exec spotify
-exec /home/jeremie/src/DevTools/pycharm-2016.3.2/bin/pycharm.sh
 exec thunderbird
 exec terminator -r main_term
 

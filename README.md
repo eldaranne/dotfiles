@@ -1,3 +1,3 @@
-# dotfiles
-Misc config files
-
+# Install
+Everything is installed by running:
+    ./setup.sh
