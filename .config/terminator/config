@@ -1,0 +1,82 @@
+[global_config]
+  enabled_plugins = LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
+  suppress_multiple_term_dialog = True
+  window_state = maximise
+[keybindings]
+  split_horiz = <Primary><Shift>Down
+  split_vert = <Primary><Shift>Right
+  switch_to_tab_1 = <Alt>1
+  switch_to_tab_10 = <Alt>0
+  switch_to_tab_2 = <Alt>2
+  switch_to_tab_3 = <Alt>3
+  switch_to_tab_4 = <Alt>4
+  switch_to_tab_5 = <Alt>5
+  switch_to_tab_6 = <Alt>6
+  switch_to_tab_7 = <Alt>7
+  switch_to_tab_8 = <Alt>8
+  switch_to_tab_9 = <Alt>9
+  toggle_zoom = <Alt>F10
+[layouts]
+  [[default]]
+    [[[child1]]]
+      parent = window0
+      type = Terminal
+    [[[window0]]]
+      parent = ""
+      type = Window
+  [[Mine]]
+    [[[child0]]]
+      fullscreen = False
+      last_active_term = 0aa05b79-9f57-4abb-b345-13bdc3bb14d8
+      last_active_window = True
+      maximised = True
+      order = 0
+      parent = ""
+      position = 1920:0
+      size = 1920, 1177
+      title = jeremie@aura: ~
+      type = Window
+    [[[child1]]]
+      order = 0
+      parent = child0
+      position = 956
+      ratio = 0.49921875
+      type = HPaned
+    [[[child3]]]
+      order = 1
+      parent = child1
+      position = 586
+      ratio = 0.5
+      type = VPaned
+    [[[terminal2]]]
+      order = 0
+      parent = child1
+      profile = default
+      type = Terminal
+      uuid = 0aa05b79-9f57-4abb-b345-13bdc3bb14d8
+    [[[terminal4]]]
+      order = 0
+      parent = child3
+      profile = default
+      type = Terminal
+      uuid = 9d5308b5-bde2-4c53-bbac-bbb3521f27e9
+    [[[terminal5]]]
+      order = 1
+      parent = child3
+      profile = default
+      type = Terminal
+      uuid = 5c9ddd94-c4c5-406b-9f20-3bc09400df9a
+[plugins]
+[profiles]
+  [[default]]
+    background_color = "#223d55"
+    background_darkness = 0.8
+    background_type = transparent
+    copy_on_selection = True
+    cursor_color = "#f0cc09"
+    font = Inconsolata-dz for Powerline Medium 10
+    foreground_color = "#ffffff"
+    palette = "#000000:#ff0000:#38de21:#ffe50a:#1460d2:#ff005d:#00bbbb:#bbbbbb:#555555:#f40e17:#3bd01d:#edc809:#5555ff:#ff55ff:#6ae3fa:#ffffff"
+    scrollback_lines = 10000
+    show_titlebar = False
+    use_system_font = False

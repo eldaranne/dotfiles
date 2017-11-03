@@ -1,0 +1,6 @@
+[submodule ".zprezto"]
+	path = .zprezto
+	url = https://github.com/eldaranne/prezto.git
+[submodule "i3lock-fancy"]
+	path = .config/i3/i3lock-fancy
+	url = https://github.com/meskarune/i3lock-fancy.git
