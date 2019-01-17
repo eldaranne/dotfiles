@@ -1,11 +1,10 @@
 #!/bin/sh
 
-PWD=$(pwd)
-cd ~
+BASE_DIR=$PWD
 
 # Essentials
 echo 'Installing essentials'
-sudo apt install terminator clang cmake zsh git xfonts-terminus vim
+sudo apt install build-essential terminator clang cmake zsh git xfonts-terminus vim ssh
 
 # i3
 echo 'Installing i3 and its dependencies'
@@ -18,9 +17,10 @@ sudo apt install libxcb1-dev libxcb-xkb-dev libxcb-randr0-dev libxcb-util-dev li
 
 # Build polybar
 echo 'Building Polybar'
-if [ ! -d polybar ]
-git clone https://github.com/jaagr/polybar.git
+if [ -d polybar ]; then
+    rm -rf polybar
 fi
+git clone --recurse-submodules https://github.com/jaagr/polybar.git
 cd polybar && mkdir build && cd build && \
 cmake                            \
   -DCMAKE_C_COMPILER="clang"     \
@@ -40,8 +40,7 @@ cmake                            \
   -DWITH_XRENDER:BOOL="ON"       \
   -DWITH_XRM:BOOL="ON"           \
   -DWITH_XSYNC:BOOL="ON"         \
-  .. && make -j$(nproc) && sudo make install && cd ../../ 
-cd ~ && rm -rf polybar
+  .. && make && sudo make install
 
 # Linux theme
 echo 'Fetching numix theme'
@@ -51,7 +50,7 @@ sudo apt install gtk-chtheme lxappearance numix-icon-theme-circle
 
 # Powerline font
 echo 'Installing powerline font'
-cd ~
+cd $BASE_DIR
 wget -O powerline-fonts.zip https://github.com/powerline/fonts/archive/master.zip
 unzip powerline-fonts.zip
 ./powerline-fonts/install.sh
@@ -60,23 +59,41 @@ rm powerline-fonts.zip
 
 # Siji font
 echo 'Installing siji font'
-git clone https://github.com/stark/siji && cd siji && ./install.sh -d ~/.fonts && cd .. && rm -rf siji
+if [ -d siji ]; then
+    rm -rf siji
+fi
+git clone --recurse-submodules https://github.com/stark/siji && cd siji && ./install.sh -d ~/.fonts
 
 # Bitmap fonts
-echo 'Enable bitmpa fonts'
+echo 'Enable bitmap fonts'
 sudo ln -s /etc/fonts/conf.avail/70-yes-bitmaps.conf /etc/fonts/conf.d/
 sudo unlink /etc/fonts/conf.d/70-no-bitmaps.conf
 sudo dpkg-reconfigure fontconfig
 
-# Use zsh by default
-chsh -s $( which zsh)
-
-cd $PWD
+cd $BASE_DIR
 
 # Copy all config files
-cp -a .z* ~/
+cp -r .zprezto ~/
+ln -s ~/.zprezto/runcoms/zlogin ~/.zlogin
+ln -s ~/.zprezto/runcoms/zlogout ~/.zlogout
+ln -s ~/.zprezto/runcoms/zpreztorc ~/.zpreztorc
+ln -s ~/.zprezto/runcoms/zprofile ~/.zprofile
+ln -s ~/.zprezto/runcoms/zshrc ~/.zshrc
+ln -s ~/.zprezto/runcoms/zshenv ~/.zshenv
 cp .vimrc ~/
 cp .Xresources ~/
 cp .fehbg ~/
 cp -ra .config ~/.config
 
+# Configure git
+git config --global alias.ci commit
+git config --global alias.co checkout
+git config --global alias.st status
+git config --global alias.br branch
+git config --global alias.st status
+git config --global alias.unstage 'reset HEAD --git '
+git config --global user.name "Jérémie Soria"
+git config --global user.email "jeremie@corstem.ai"
+
+# Use zsh by default
+chsh -s $( which zsh)
