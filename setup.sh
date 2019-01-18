@@ -4,16 +4,16 @@ BASE_DIR=$PWD
 
 # Essentials
 echo 'Installing essentials'
-sudo apt install build-essential terminator clang cmake zsh git xfonts-terminus vim ssh
+sudo apt install --assume-yes build-essential tig terminator clang cmake zsh git xfonts-terminus fonts-firacode vim ssh
 
 # i3
 echo 'Installing i3 and its dependencies'
-sudo apt install i3 rofi xiccd feh udevil kbdd compton compton-conf
+sudo apt install --assume-yes i3 rofi xiccd feh udevil kbdd compton compton-conf
 
 # Polybar dependencies
 echo ''Installing polybar dependencies
-sudo apt install unifont ccache libcairo2-dev xcb-proto libasound2-dev libcurl4-openssl-dev libmpdclient-dev libiw-dev
-sudo apt install libxcb1-dev libxcb-xkb-dev libxcb-randr0-dev libxcb-util-dev libxcb-icccm4-dev libxcb-ewmh-dev libxcb-render0-dev libxcb-composite0-dev libxcb-sync-dev libxcb-damage0-dev libxcb-composite0-dev libxcb-xrm-dev libxcb-cursor-dev python-xcbgen
+sudo apt install --assume-yes unifont ccache libcairo2-dev xcb-proto libasound2-dev libcurl4-openssl-dev libmpdclient-dev libiw-dev
+sudo apt install --assume-yes libxcb1-dev libxcb-xkb-dev libxcb-randr0-dev libxcb-util-dev libxcb-icccm4-dev libxcb-ewmh-dev libxcb-render0-dev libxcb-composite0-dev libxcb-sync-dev libxcb-damage0-dev libxcb-composite0-dev libxcb-xrm-dev libxcb-cursor-dev python-xcbgen
 
 # Build polybar
 echo 'Building Polybar'
@@ -46,7 +46,7 @@ cmake                            \
 echo 'Fetching numix theme'
 sudo apt-add-repository ppa:numix/ppa
 sudo apt update
-sudo apt install gtk-chtheme lxappearance numix-icon-theme-circle
+sudo apt install --assume-yes gtk-chtheme lxappearance numix-icon-theme-circle
 
 # Powerline font
 echo 'Installing powerline font'
@@ -70,9 +70,6 @@ sudo ln -s /etc/fonts/conf.avail/70-yes-bitmaps.conf /etc/fonts/conf.d/
 sudo unlink /etc/fonts/conf.d/70-no-bitmaps.conf
 sudo dpkg-reconfigure fontconfig
 
-# Install Fira Code font
-sudo apt install fonts-firacode
-
 cd $BASE_DIR
 
 # Copy all config files
@@ -94,9 +91,22 @@ git config --global alias.co checkout
 git config --global alias.st status
 git config --global alias.br branch
 git config --global alias.st status
-git config --global alias.unstage 'reset HEAD --git '
+git config --global alias.unstage "reset HEAD --git"
 git config --global user.name "Jérémie Soria"
 git config --global user.email "jeremie@corstem.ai"
+git config --global diff.tool vscode
+git config --global merge.tool vscode
+git config --global difftool.vscode.cmd "code --wait --diff \$LOCAL \$REMOTE"
+git config --global mergetool.vscode.cmd "code --wait \$MERGED"
+git config --global core editor "code --wait"
+git config --global core.autocrlf "false"
+git config --global core.safecrlf "false"
 
 # Use zsh by default
 chsh -s $( which zsh)
+
+# Manage ssh-agent with keychain
+sudo apt install --assume-yes keychain
+echo "# ssh-agent at first launch of zsh
+eval \`keychain --eval --agents ssh id_rsa\`" >> ~/.zshrc
+
