@@ -1,0 +1,20 @@
+{
+    "workbench.colorTheme": "Monokai",
+    "editor.formatOnPaste": true,
+    "editor.formatOnType": true,
+    "workbench.iconTheme": "vscode-icons",
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 500,
+    "[python]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
+    },
+    "autoDocstring.docstringFormat": "sphinx",
+    "autoDocstring.newlineBeforeSummary": true,
+    "editor.fontLigatures": true,
+    "editor.fontFamily": "Fira Code",
+    "editor.fontSize": 12,
+    "window.zoomLevel": 0,
+    "editor.minimap.enabled": false
+}

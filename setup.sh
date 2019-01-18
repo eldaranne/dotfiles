@@ -70,6 +70,9 @@ sudo ln -s /etc/fonts/conf.avail/70-yes-bitmaps.conf /etc/fonts/conf.d/
 sudo unlink /etc/fonts/conf.d/70-no-bitmaps.conf
 sudo dpkg-reconfigure fontconfig
 
+# Install Fira Code font
+sudo apt install fonts-firacode
+
 cd $BASE_DIR
 
 # Copy all config files
