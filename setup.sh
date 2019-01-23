@@ -98,9 +98,9 @@ git config --global diff.tool vscode
 git config --global merge.tool vscode
 git config --global difftool.vscode.cmd "code --wait --diff \$LOCAL \$REMOTE"
 git config --global mergetool.vscode.cmd "code --wait \$MERGED"
-git config --global core editor "code --wait"
-git config --global core.autocrlf "false"
-git config --global core.safecrlf "false"
+git config --global core.editor "code --wait"
+git config --global core.autocrlf "true"
+git config --global core.safecrlf "warn"
 
 # Use zsh by default
 chsh -s $( which zsh)

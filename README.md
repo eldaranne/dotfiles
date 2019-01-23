@@ -6,3 +6,5 @@ Clone the repo recursively because it depends on submodules:
 Everything is installed by running this script from the dotfiles repo root:
 >./setup.sh
 Just logout and log back in for zsh to be active and log into the i3 user.
+
+> In setup.sh, just change email and name for the git config.
