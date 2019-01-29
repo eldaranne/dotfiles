@@ -4,7 +4,14 @@ BASE_DIR=$PWD
 
 # Essentials
 echo 'Installing essentials'
-sudo apt install --assume-yes build-essential tig terminator clang cmake zsh git xfonts-terminus fonts-firacode vim ssh
+sudo apt install --assume-yes build-essential tig terminator clang cmake zsh git xfonts-terminus fonts-firacode fonts-inconsolata silversearcher-ag vim ssh apt-transport-https
+
+# Visual Studio Code
+curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
+sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+sudo apt update
+sudo apt --assume-yes install code
 
 # i3
 echo 'Installing i3 and its dependencies'
